@@ -2,7 +2,6 @@ const Post = require("../models/PostModel");
 const User = require("../models/UserModel");
 const mongoose = require("mongoose");
 
-
 const getOnePost = async (req, res, next) => {
   const id = req.params.postId;
   try {
@@ -48,6 +47,10 @@ const createPost = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: "User not found ", error: err });
   }
+  const images = [];
+  req.files.map((image) => {
+    images.push(image.path);
+  });
   const post = new Post({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -61,7 +64,7 @@ const createPost = async (req, res, next) => {
     roommatesMinAge: req.body.roommatesMinAge,
     roommatesMaxAge: req.body.roommatesMaxAge,
     status: req.body.status,
-    postImage: req.file.path,
+    postImages: images,
     user: req.body.userId,
   });
   try {

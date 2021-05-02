@@ -26,7 +26,6 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const signup = async (req, res, next) => {
-  // search if user exist or not
   try {
     const searchUser = await User.find({ email: req.body.email });
     if (searchUser.length >= 1) {
@@ -37,7 +36,7 @@ const signup = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({ error: err });
   }
-  // if hash password is passed successfully, we create a user and we save it in data base
+  
   bcrypt.hash(req.body.password, 10, async (err, hash) => {
     if (err) {
       return res.status(500).json({

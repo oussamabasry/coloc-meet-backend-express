@@ -4,7 +4,7 @@ const PostController = require("../controllers/PostController");
 
 const router = express.Router();
 
-router.post("/", uploadMulter.single("postImage"), PostController.createPost);
+router.post("/", uploadMulter.any(), PostController.createPost);
 router.get("/:postId", PostController.getOnePost);
 router.get("/", PostController.getAllPosts);
 router.get("/related/:postId", PostController.getRelatedPosts);
