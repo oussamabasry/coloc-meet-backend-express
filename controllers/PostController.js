@@ -51,6 +51,7 @@ const createPost = async (req, res, next) => {
   req.files.map((image) => {
     images.push(image.path);
   });
+  
   const post = new Post({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -75,4 +76,54 @@ const createPost = async (req, res, next) => {
   }
 };
 
-module.exports = { getOnePost, getAllPosts, getRelatedPosts, createPost };
+const deletePost = async (req, res, next) => {
+  const id = req.params.postId;
+  try {
+    await Post.deleteOne({ _id: id });
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
+const updatePost=(req,res)=>{
+
+    const images = [];
+  req.files.map((image) => {
+    images.push(image.path);
+  });
+    
+    Post.findById(req.params.postId)
+        .then(articl=> {
+            articl.city= req.body.city,
+            articl.title= req.body.title,
+            articl.stars= req.body.stars,
+            articl.description= req.body.description,
+            articl.price= req.body.price,
+            articl.status=req.body.status,
+            articl.gender= req.body.gender,
+             articl.roommatesNumber= req.body.roommatesNumber,
+            articl.roommatesMinAge= req.body.roommatesMinAge,
+            articl.roommatesMaxAge= req.body.roommatesMaxAge,
+            articl.postImages=images,
+            articl.save((err, post) =>{
+    
+                if(err){
+                    return res.status(404).json({
+                        error: 'body request !!'
+                    })
+    
+                }
+    
+            res.json({
+                    post: articl
+                })
+            })
+    
+        
+        })
+        .catch((err)=> console.log(err))
+    
+    }
+
+module.exports = { getOnePost, getAllPosts, getRelatedPosts, createPost, deletePost, updatePost };

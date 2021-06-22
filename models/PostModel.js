@@ -5,7 +5,7 @@ const postSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: { type: String, required: true },
   city: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: Date },
   stars: { type: Number, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema({
   roommatesMaxAge: { type: Number, required: true },
   status: { type: String, required: true },
   postImages: { type: [], required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User"},
 });
 
 module.exports = mongoose.model("Post", postSchema);

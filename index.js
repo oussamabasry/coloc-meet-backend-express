@@ -4,9 +4,11 @@ const postRoutes = require("./routes/PostRoutes");
 const userRoutes = require("./routes/UserRoutes");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
