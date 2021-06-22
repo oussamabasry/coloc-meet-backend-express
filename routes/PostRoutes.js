@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/", checkAuth, uploadMulter.any(), PostController.createPost);
 router.get("/:postId", PostController.getOnePost);
+router.get("/user/:userId", PostController.getUserPosts);
 router.get("/", PostController.getAllPosts);
 router.get("/related/:postId", PostController.getRelatedPosts);
 router.delete("/:postId", PostController.deletePost);

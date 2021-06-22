@@ -89,7 +89,7 @@ const login = async (req, res, next) => {
             expiresIn: "1h",
           } */
         );
-       user[0].password = undefined;
+        user[0].password = undefined;
         return res.status(200).json({
           message: "Auth successful",
           token: token,
@@ -115,4 +115,37 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getOneUser, getAllUsers, deleteUser, signup, login };
+const updateUser = async (req, res, next) => {
+  const id = req.params.userId;
+  console.log(req.body);
+  mongoose.set("useFindAndModify", false);
+  User.findByIdAndUpdate(
+    id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      birth: req.body.birth,
+      email: req.body.email,
+      phone: req.body.phone,
+    },
+    function (err, user) {
+      if (err) {
+        res.status(500).json({ error: err });
+      } else {
+        res.status(200).json({
+          message: "User updated successfully",
+          user: user,
+        });
+      }
+    }
+  );
+};
+
+module.exports = {
+  getOneUser,
+  getAllUsers,
+  deleteUser,
+  signup,
+  login,
+  updateUser,
+};
