@@ -156,7 +156,21 @@ const getPostsFilter = async (req, res, next) => {
     res.status(500).json({ error: err });
   }
 };
-
+const searchpost = async (req, res, next) => {
+  try {
+    const posts = await Post.aggregate([
+      {
+           $match: {
+            title: { $eq: req.body.title } },
+          
+        },
+     
+    ]);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
 module.exports = {
   getOnePost,
   getAllPosts,
@@ -166,4 +180,5 @@ module.exports = {
   updatePost,
   getUserPosts,
   getPostsFilter,
+  searchpost
 };

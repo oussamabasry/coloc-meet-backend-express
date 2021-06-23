@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.post("/", checkAuth, uploadMulter.any(), PostController.createPost);
 router.post("/filter", PostController.getPostsFilter);
+router.post("/search", PostController.searchpost);
+
 router.get("/:postId", PostController.getOnePost);
 router.get("/user/:userId", PostController.getUserPosts);
 router.get("/", PostController.getAllPosts);
