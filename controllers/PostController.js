@@ -133,6 +133,30 @@ const updatePost = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+const getPostsFilter = async (req, res, next) => {
+  try {
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          $and: [
+            { city: { $eq: req.body.city } },
+            { gender: { $eq: req.body.sexe } },
+            {
+              price: {
+                $gt: Number(req.body.price - 500),
+                $lt: Number(req.body.price),
+              },
+            },
+          ],
+        },
+      },
+    ]);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 module.exports = {
   getOnePost,
   getAllPosts,
@@ -141,4 +165,5 @@ module.exports = {
   deletePost,
   updatePost,
   getUserPosts,
+  getPostsFilter,
 };
