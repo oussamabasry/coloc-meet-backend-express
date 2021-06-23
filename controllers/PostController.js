@@ -158,14 +158,9 @@ const getPostsFilter = async (req, res, next) => {
 };
 const searchpost = async (req, res, next) => {
   try {
-    const posts = await Post.aggregate([
-      {
-           $match: {
-            title: { $eq: req.body.title } },
-          
-        },
-     
-    ]);
+    const posts = await Post.find({
+      title: { $regex: new RegExp(req.body.title, "i") },
+    });
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -180,5 +175,5 @@ module.exports = {
   updatePost,
   getUserPosts,
   getPostsFilter,
-  searchpost
+  searchpost,
 };
