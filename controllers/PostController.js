@@ -156,6 +156,7 @@ const getPostsFilter = async (req, res, next) => {
     res.status(500).json({ error: err });
   }
 };
+
 const searchpost = async (req, res, next) => {
   try {
     const posts = await Post.find({
@@ -166,6 +167,7 @@ const searchpost = async (req, res, next) => {
     res.status(500).json({ error: err });
   }
 };
+
 module.exports = {
   getOnePost,
   getAllPosts,

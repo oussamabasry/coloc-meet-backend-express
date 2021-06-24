@@ -27,7 +27,7 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const signup = async (req, res, next) => {
-  console.log(req.body);
+  
   try {
     const searchUser = await User.find({ email: req.body.email });
     if (searchUser.length >= 1) {
@@ -117,7 +117,6 @@ const deleteUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   const id = req.params.userId;
-  console.log(req.body);
   mongoose.set("useFindAndModify", false);
   User.findByIdAndUpdate(
     id,
